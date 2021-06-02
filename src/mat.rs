@@ -16,7 +16,7 @@ pub trait AdditiveGroup: Zero + Add<Output = Self> + AddAssign + Sub<Output = Se
 pub trait MultiplicativeGroup: One + Mul<Output = Self> + MulAssign {}
 pub trait Ring: AdditiveGroup + MultiplicativeGroup {}
 pub trait EuclideanDomain: Ring + Rem<Output = Self> + PartialEq {}
-pub trait Exponent: Zero + One + BitAnd<Output = Self> + Shr<u8, Output = Self> + ShrAssign<u8> + PartialEq {}
+pub trait Exponent: Zero + One + BitAnd<Self, Output = Self> + Shr<u8, Output = Self> + ShrAssign<u8> + PartialEq {}
 
 impl AdditiveGroup       for u64 {}
 impl MultiplicativeGroup for u64 {}
@@ -29,7 +29,6 @@ impl MultiplicativeGroup for BigUint {}
 impl Ring                for BigUint {}
 impl EuclideanDomain     for BigUint {}
 impl Exponent            for BigUint {}
-
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Mat<T>(pub (T, T), pub (T, T));
@@ -56,7 +55,7 @@ impl<T: EuclideanDomain + Clone> Mat<T> {
     }
 }
 
-pub fn exp_req<T: EuclideanDomain + Clone, U: Exponent + Clone>(x: &Mat<T>, n: U, m: T) -> Mat<T> {
+pub fn exp_req<'a, T: EuclideanDomain + Clone, U: Exponent + Clone>(x: &Mat<T>, n: U, m: T) -> Mat<T> {
     if n.is_zero() {
         return Mat::one();
     }

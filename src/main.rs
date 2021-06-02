@@ -1,17 +1,25 @@
 extern crate fibo;
 
-fn run(label: &str, func: fn(u64, u64) -> u64, x: u64) {
+use core::fmt::Display;
+use std::env;
+use std::process;
+use std::str::FromStr;
+use num_bigint::BigUint;
+
+fn run<T: Display + Clone>(func: fn(T, T) -> T, n: T, m: T) {
     let begin = std::time::Instant::now();
-    let m = 1000_000_000;
-    let y = func(x, m);
+    let y = func(n.clone(), m.clone());
     let elapsed = 1000 * begin.elapsed().as_secs() + begin.elapsed().subsec_millis() as u64;
-    println!("{}: n={:>20}, F(n)%{}={:>9} ({:>3}ms)", label, x, m, y, elapsed);
+    println!("F({}) = {} mod {} ({}ms)", n, y, m, elapsed);
 }
 
 fn main() {
-    run("Recursive ", fibo::fibo_rec     ,         35);
-    run("Sequencial", fibo::fibo_seq     , 10_000_000);
-    run("Matrix    ", fibo::fibo_mat     , 10_000_000);
-    run("Mat (req) ", fibo::fibo_mat_req , 18_446_744_073_709_551_615);
-    run("Mat (loop)", fibo::fibo_mat_loop, 18_446_744_073_709_551_615);
+    let argv: Vec<String> = env::args().collect();
+    if argv.len() < 3 {
+        println!("Usage: {} N M - Computes the N-th Fibonacci number with modulo M", argv[0]);
+        process::exit(0)
+    }
+    let n = BigUint::from_str(&argv[1]).unwrap();
+    let m = BigUint::from_str(&argv[2]).unwrap();
+    run(fibo::fibo_mat_loop, n, m);
 }
