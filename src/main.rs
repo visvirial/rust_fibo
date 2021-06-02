@@ -1,4 +1,3 @@
-
 extern crate fibo;
 
 fn run(label: &str, func: fn(u64, u64) -> u64, x: u64) {
@@ -16,4 +15,3 @@ fn main() {
     run("Mat (req) ", fibo::fibo_mat_req , 18_446_744_073_709_551_615);
     run("Mat (loop)", fibo::fibo_mat_loop, 18_446_744_073_709_551_615);
 }
-
