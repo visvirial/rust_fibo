@@ -40,6 +40,7 @@ pub fn fibo_mat_loop(x: u64, m: u64) -> u64 {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     #[test]
     fn fibo_rec_n_10() {
         assert_eq!(fibo_rec(10, 1000), 55);
