@@ -3,6 +3,9 @@ name = "fibo"
 version = "0.0.1"
 authors = ["Masahiko Hyuga <mail@mhyuga.jp>"]
 edition = "2018"
+description = "Compute the N-th Fibonacci number with arbitrary number precision."
+license = "MIT"
+repository = "https://github.com/visvirial/rust_fibo"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
