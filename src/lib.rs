@@ -1,8 +1,10 @@
+pub mod algebra;
 pub mod mat;
 
+/*
 use num_bigint::BigUint;
-use mat::EuclideanDomain;
-use mat::Exponent;
+use algebra::EuclideanDomain;
+use algebra::Exponent;
 
 pub trait Index: EuclideanDomain + Exponent {}
 
@@ -49,9 +51,11 @@ pub fn fibo_mat_req<T: Index + Clone, U: EuclideanDomain + Clone>(n: T, m: U) ->
 pub fn fibo_mat_loop<T: Index + Clone, U: EuclideanDomain + Clone>(n: T, m: U) -> U {
     mat::Mat::q_matrix().pow(n, m).0.1
 }
+*/
 
 #[cfg(test)]
 mod tests {
+    /*
     use super::*;
     #[test]
     fn fibo_rec_n_10_u32() {
@@ -93,4 +97,5 @@ mod tests {
     fn fibo_mat_loop_1000000_1000_big_uint() {
         assert_eq!(fibo_mat_loop(BigUint::from(1000_000u32), BigUint::from(1000u32)), BigUint::from(875u32));
     }
+    */
 }

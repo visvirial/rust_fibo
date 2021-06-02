@@ -9,9 +9,11 @@ fn run(label: &str, func: fn(u64, u64) -> u64, x: u64) {
 }
 
 fn main() {
+    /*
     run("Recursive ", fibo::fibo_rec     ,         35);
     run("Sequencial", fibo::fibo_seq     , 10_000_000);
     run("Matrix    ", fibo::fibo_mat     , 10_000_000);
     run("Mat (req) ", fibo::fibo_mat_req , 18_446_744_073_709_551_615);
     run("Mat (loop)", fibo::fibo_mat_loop, 18_446_744_073_709_551_615);
+    */
 }

@@ -1,45 +1,15 @@
-use std::ops::Add;
-use std::ops::AddAssign;
-use std::ops::Sub;
-use std::ops::SubAssign;
-use std::ops::Mul;
-use std::ops::MulAssign;
-use std::ops::Rem;
-use std::ops::Shr;
-use std::ops::ShrAssign;
-use std::ops::BitAnd;
-use num_traits::identities::Zero;
-use num_traits::identities::One;
-use num_bigint::BigUint;
-
-pub trait AdditiveGroup: Zero + Add<Output = Self> + AddAssign + Sub<Output = Self> + SubAssign {}
-pub trait MultiplicativeGroup: One + Mul<Output = Self> + MulAssign {}
-pub trait Ring: AdditiveGroup + MultiplicativeGroup {}
-pub trait EuclideanDomain: Ring + Rem<Output = Self> + PartialEq {}
-pub trait Exponent: Zero + One + BitAnd<Output = Self> + Shr<u8, Output = Self> + ShrAssign<u8> + PartialEq {}
-
-impl AdditiveGroup       for u64 {}
-impl MultiplicativeGroup for u64 {}
-impl Ring                for u64 {}
-impl EuclideanDomain     for u64 {}
-impl Exponent            for u64 {}
-
-impl AdditiveGroup       for BigUint {}
-impl MultiplicativeGroup for BigUint {}
-impl Ring                for BigUint {}
-impl EuclideanDomain     for BigUint {}
-impl Exponent            for BigUint {}
-
+use super::algebra::EuclideanDomain;
+use super::algebra::Exponent;
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Mat<T>(pub (T, T), pub (T, T));
 
-impl<T: EuclideanDomain> Mat<T> {
-    pub fn one() -> Self {
-        Mat((T::one() , T::zero()), (T::zero(), T::one() ))
+impl<T: Ring> Mat<T> {
+    pub fn one(t: &T) -> Self {
+        Mat((self.one() , self.zero()), (self.zero(), self.one() ))
     }
-    pub fn q_matrix() -> Self {
-        Mat((T::zero(), T::one() ), (T::one() , T::one() ))
+    pub fn q_matrix(&self) -> Self {
+        Mat((self.zero(), self.one() ), (self.one() , self.one() ))
     }
 }
 
@@ -91,6 +61,7 @@ impl<T: EuclideanDomain + Clone> Mat<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use num_bigint::BigUint;
     #[test]
     fn mul_1234_5678_u32() {
         let a = Mat((1, 2), (3, 4));
