@@ -10,7 +10,7 @@ use std::ops::ShrAssign;
 use std::ops::BitAnd;
 use num_traits::identities::Zero;
 use num_traits::identities::One;
-use num_bigint::BigUint;
+use num_bigint::BigInt;
 
 pub trait AdditiveGroup: Zero + Add<Output = Self> + AddAssign + Sub<Output = Self> + SubAssign {}
 pub trait MultiplicativeGroup: One + Mul<Output = Self> + MulAssign {}
@@ -18,17 +18,17 @@ pub trait Ring: AdditiveGroup + MultiplicativeGroup {}
 pub trait EuclideanDomain: Ring + Rem<Output = Self> + PartialEq {}
 pub trait Exponent: Zero + One + BitAnd<Self, Output = Self> + Shr<u8, Output = Self> + ShrAssign<u8> + PartialEq {}
 
-impl AdditiveGroup       for u64 {}
-impl MultiplicativeGroup for u64 {}
-impl Ring                for u64 {}
-impl EuclideanDomain     for u64 {}
-impl Exponent            for u64 {}
+impl AdditiveGroup       for i64 {}
+impl MultiplicativeGroup for i64 {}
+impl Ring                for i64 {}
+impl EuclideanDomain     for i64 {}
+impl Exponent            for i64 {}
 
-impl AdditiveGroup       for BigUint {}
-impl MultiplicativeGroup for BigUint {}
-impl Ring                for BigUint {}
-impl EuclideanDomain     for BigUint {}
-impl Exponent            for BigUint {}
+impl AdditiveGroup       for BigInt {}
+impl MultiplicativeGroup for BigInt {}
+impl Ring                for BigInt {}
+impl EuclideanDomain     for BigInt {}
+impl Exponent            for BigInt {}
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Mat<T>(pub (T, T), pub (T, T));
@@ -99,10 +99,10 @@ mod tests {
     }
     #[test]
     fn mul_1234_5678_big_uint() {
-        let a = Mat((BigUint::from( 1u32), BigUint::from( 2u32)), (BigUint::from( 3u32), BigUint::from( 4u32)));
-        let b = Mat((BigUint::from( 5u32), BigUint::from( 6u32)), (BigUint::from( 7u32), BigUint::from( 8u32)));
-        let c = Mat((BigUint::from(19u32), BigUint::from(22u32)), (BigUint::from(43u32), BigUint::from(50u32)));
-        assert_eq!(a.mul(&b, BigUint::from(1000u32)), c);
+        let a = Mat((BigInt::from( 1u32), BigInt::from( 2u32)), (BigInt::from( 3u32), BigInt::from( 4u32)));
+        let b = Mat((BigInt::from( 5u32), BigInt::from( 6u32)), (BigInt::from( 7u32), BigInt::from( 8u32)));
+        let c = Mat((BigInt::from(19u32), BigInt::from(22u32)), (BigInt::from(43u32), BigInt::from(50u32)));
+        assert_eq!(a.mul(&b, BigInt::from(1000u32)), c);
     }
     #[test]
     fn exp_req_1234_100_u32() {
@@ -112,9 +112,9 @@ mod tests {
     }
     #[test]
     fn exp_req_1234_100_big_uint() {
-        let a = Mat((BigUint::from(  1u32), BigUint::from(  2u32)), (BigUint::from(  3u32), BigUint::from(  4u32)));
-        let b = Mat((BigUint::from(999u32), BigUint::from(250u32)), (BigUint::from(875u32), BigUint::from(874u32)));
-        assert_eq!(exp_req(&a, BigUint::from(100u32), BigUint::from(1000u32)), b);
+        let a = Mat((BigInt::from(  1u32), BigInt::from(  2u32)), (BigInt::from(  3u32), BigInt::from(  4u32)));
+        let b = Mat((BigInt::from(999u32), BigInt::from(250u32)), (BigInt::from(875u32), BigInt::from(874u32)));
+        assert_eq!(exp_req(&a, BigInt::from(100u32), BigInt::from(1000u32)), b);
     }
     #[test]
     fn exp_loop_1234_100_u32() {
@@ -124,8 +124,8 @@ mod tests {
     }
     #[test]
     fn exp_loop_1234_100_big_uint() {
-        let a = Mat((BigUint::from(  1u32), BigUint::from(  2u32)), (BigUint::from(  3u32), BigUint::from(  4u32)));
-        let b = Mat((BigUint::from(999u32), BigUint::from(250u32)), (BigUint::from(875u32), BigUint::from(874u32)));
-        assert_eq!(exp_loop(&a, BigUint::from(100u32), BigUint::from(1000u32)), b);
+        let a = Mat((BigInt::from(  1u32), BigInt::from(  2u32)), (BigInt::from(  3u32), BigInt::from(  4u32)));
+        let b = Mat((BigInt::from(999u32), BigInt::from(250u32)), (BigInt::from(875u32), BigInt::from(874u32)));
+        assert_eq!(exp_loop(&a, BigInt::from(100u32), BigInt::from(1000u32)), b);
     }
 }

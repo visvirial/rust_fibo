@@ -4,7 +4,7 @@ use core::fmt::Display;
 use std::env;
 use std::process;
 use std::str::FromStr;
-use num_bigint::BigUint;
+use num_bigint::BigInt;
 
 fn run<T: Display + Clone>(func: fn(T, T) -> T, n: T, m: T) {
     let begin = std::time::Instant::now();
@@ -19,7 +19,7 @@ fn main() {
         println!("Usage: {} N M - Computes the N-th Fibonacci number with modulo M", argv[0]);
         process::exit(0)
     }
-    let n = BigUint::from_str(&argv[1]).unwrap();
-    let m = BigUint::from_str(&argv[2]).unwrap();
+    let n = BigInt::from_str(&argv[1]).unwrap();
+    let m = BigInt::from_str(&argv[2]).unwrap();
     run(fibo::fibo_mat_loop, n, m);
 }
